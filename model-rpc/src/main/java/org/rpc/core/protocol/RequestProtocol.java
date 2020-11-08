@@ -1,13 +1,20 @@
 package org.rpc.core.protocol;
 
+import java.io.Serializable;
+
 /**
- * 
+ * PRC的传输协议
+ * 网络中我们要进行对象的传输，是要实现序列化的
  */
-public class RequestProtocol {
+public class RequestProtocol implements Serializable {
+    //接口全名称
     private String intefaceClassName;
+    //调用方法名
     private String methodName;
+    //参数类型列表
     private Class<?>[] parameterTypes;
-    private Object[] patameterValues;
+    //参数值列表
+    private Object[] parameterValues;
 
     public String getIntefaceClassName() {
         return intefaceClassName;
@@ -33,11 +40,11 @@ public class RequestProtocol {
         this.parameterTypes = parameterTypes;
     }
 
-    public Object[] getPatameterValues() {
-        return patameterValues;
+    public Object[] getParameterValues() {
+        return parameterValues;
     }
 
-    public void setPatameterValues(Object[] patameterValues) {
-        this.patameterValues = patameterValues;
+    public void setParameterValues(Object[] parameterValues) {
+        this.parameterValues = parameterValues;
     }
 }
