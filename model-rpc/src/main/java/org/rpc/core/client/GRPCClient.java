@@ -22,10 +22,12 @@ public class GRPCClient {
      */
     public static <T>T getRemoteProxy(Class<T> interfaceClass, InetSocketAddress address){
         return (T)Proxy.newProxyInstance(interfaceClass.getClassLoader(),
-                new Class<?>[]{}, new InvocationHandler() {
+                new Class<?>[]{interfaceClass}, new InvocationHandler() {
                     @Override
                     public Object invoke(Object proxy, Method method, Object[] args) throws Throwable {
                         try(Socket socket = new Socket()){
+                            //向客户端发出请求
+                            socket.connect(address);
                             try(
                                     //获取输出流(一个处理流)   序列化流
                                     ObjectOutputStream serializer = new ObjectOutputStream(socket.getOutputStream());

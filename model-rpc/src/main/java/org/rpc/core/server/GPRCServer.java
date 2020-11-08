@@ -34,6 +34,7 @@ public class GPRCServer {
      */
     public void publishServiceAPI(Class<?> interfaceClass,Object instance){
         this.serverMap.put(interfaceClass.getName(),instance);
+        System.out.println("获取到要暴露的方法");
     }
 
     /**
@@ -49,7 +50,7 @@ public class GPRCServer {
             serverSocket.bind(new InetSocketAddress(port));
             while (true){
                 //accept（）让线程进入阻塞，等待端口有值传入，再执行run方法
-                poolExecutor.execute(new SercerTask(serverSocket.accept()));
+                poolExecutor.execute(new ServerTask(serverSocket.accept()));
             }
 
         }catch (Exception e){
@@ -58,9 +59,9 @@ public class GPRCServer {
     }
 
 
-    private class SercerTask implements Runnable{
+    private class ServerTask implements Runnable{
         private final Socket socket;
-        public SercerTask(Socket socket) {
+        public ServerTask(Socket socket) {
             this.socket = socket;
         }
 
